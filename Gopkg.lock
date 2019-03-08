@@ -761,7 +761,7 @@
 
 [[projects]]
   branch = "dev"
-  digest = "1:d1a5998da957e61001fa84d53675ccee44cf4e3cde0d1a34e189a0e3e7c77f9f"
+  digest = "1:3d5d0704730376af5f7170c0b9bcbee508e55d7c3c0c2fcec83e30a4d598eee9"
   name = "github.com/ligato/vpp-agent"
   packages = [
     "api/genericmanager",
@@ -776,6 +776,7 @@
     "api/models/vpp/l3",
     "api/models/vpp/nat",
     "api/models/vpp/punt",
+    "api/models/vpp/srv6",
     "api/models/vpp/stn",
     "clientv2/linux",
     "clientv2/vpp",
@@ -1787,6 +1788,7 @@
     "github.com/ligato/vpp-agent/api/models/vpp/l3",
     "github.com/ligato/vpp-agent/api/models/vpp/nat",
     "github.com/ligato/vpp-agent/api/models/vpp/punt",
+    "github.com/ligato/vpp-agent/api/models/vpp/srv6",
     "github.com/ligato/vpp-agent/api/models/vpp/stn",
     "github.com/ligato/vpp-agent/clientv2/linux",
     "github.com/ligato/vpp-agent/clientv2/vpp",
