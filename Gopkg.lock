@@ -761,7 +761,7 @@
 
 [[projects]]
   branch = "dev"
-  digest = "1:3d5d0704730376af5f7170c0b9bcbee508e55d7c3c0c2fcec83e30a4d598eee9"
+  digest = "1:40df68d22cc087035e780898ce08dff9ee76ea84957c406d3f2a2b086950b9af"
   name = "github.com/ligato/vpp-agent"
   packages = [
     "api/genericmanager",
@@ -828,6 +828,7 @@
     "plugins/vpp/binapi/vpp1810/nat",
     "plugins/vpp/binapi/vpp1810/punt",
     "plugins/vpp/binapi/vpp1810/session",
+    "plugins/vpp/binapi/vpp1810/sr",
     "plugins/vpp/binapi/vpp1810/stats",
     "plugins/vpp/binapi/vpp1810/stn",
     "plugins/vpp/binapi/vpp1810/tap",
@@ -846,6 +847,7 @@
     "plugins/vpp/binapi/vpp1901/memif",
     "plugins/vpp/binapi/vpp1901/nat",
     "plugins/vpp/binapi/vpp1901/punt",
+    "plugins/vpp/binapi/vpp1901/sr",
     "plugins/vpp/binapi/vpp1901/stn",
     "plugins/vpp/binapi/vpp1901/tap",
     "plugins/vpp/binapi/vpp1901/tapv2",
@@ -883,6 +885,12 @@
     "plugins/vpp/puntplugin/vppcalls",
     "plugins/vpp/puntplugin/vppcalls/vpp1810",
     "plugins/vpp/puntplugin/vppcalls/vpp1901",
+    "plugins/vpp/srplugin",
+    "plugins/vpp/srplugin/descriptor",
+    "plugins/vpp/srplugin/descriptor/adapter",
+    "plugins/vpp/srplugin/vppcalls",
+    "plugins/vpp/srplugin/vppcalls/vpp1810",
+    "plugins/vpp/srplugin/vppcalls/vpp1901",
     "plugins/vpp/stnplugin",
     "plugins/vpp/stnplugin/descriptor",
     "plugins/vpp/stnplugin/descriptor/adapter",
@@ -1821,6 +1829,7 @@
     "github.com/ligato/vpp-agent/plugins/vpp/l3plugin/descriptor",
     "github.com/ligato/vpp-agent/plugins/vpp/natplugin",
     "github.com/ligato/vpp-agent/plugins/vpp/puntplugin",
+    "github.com/ligato/vpp-agent/plugins/vpp/srplugin",
     "github.com/ligato/vpp-agent/plugins/vpp/stnplugin",
     "github.com/namsral/flag",
     "github.com/onsi/gomega",
