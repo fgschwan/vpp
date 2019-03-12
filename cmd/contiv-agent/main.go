@@ -15,6 +15,7 @@
 package main
 
 import (
+	"github.com/contiv/vpp/plugins/sr"
 	"os"
 	"time"
 
@@ -100,6 +101,7 @@ type ContivAgent struct {
 	Policy       *policy.Plugin
 	Service      *service.Plugin
 	BGPReflector *bgpreflector.BGPReflector
+	SRPlugin     *sr.Plugin
 }
 
 func (c *ContivAgent) String() string {
@@ -197,6 +199,11 @@ func main() {
 		deps.ContivConf = contivConf
 	}))
 
+	srPlugin := sr.NewPlugin(sr.UseDeps(func(deps *sr.Deps) {
+		deps.IPAM = ipamPlugin
+		deps.PodManager = podManager
+	}))
+
 	controller := controller.NewPlugin(controller.UseDeps(func(deps *controller.Deps) {
 		deps.LocalDB = &bolt.DefaultPlugin
 		deps.RemoteDB = &etcd.DefaultPlugin
@@ -210,6 +217,7 @@ func main() {
 			policyPlugin,
 			bgpReflector,
 			statsCollector,
+			srPlugin,
 		}
 		deps.ExtSources = []controller.ExternalConfigSource{
 			contivGRPC,
@@ -258,6 +266,7 @@ func main() {
 		Policy:        policyPlugin,
 		Service:       servicePlugin,
 		BGPReflector:  bgpReflector,
+		SRPlugin:      srPlugin,
 	}
 
 	a := agent.NewAgent(agent.AllPlugins(contivAgent), agent.StartTimeout(getStartupTimeout()))
