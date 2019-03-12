@@ -19,7 +19,6 @@ package sr
 
 import (
 	"fmt"
-	"github.com/go-errors/errors"
 	"net"
 
 	controller "github.com/contiv/vpp/plugins/controller/api"
@@ -37,6 +36,10 @@ type Plugin struct {
 	Deps
 
 	state State
+
+	// creating new localSIDs from prefix and counter
+	podToIndex map[string]int
+	counter    int
 }
 
 // Deps groups the dependencies of the Plugin.
@@ -57,6 +60,7 @@ type PodState struct {
 // Init initialize inner state of Plugin
 func (p *Plugin) Init() (err error) {
 	p.state = make(State)
+	p.podToIndex = make(map[string]int)
 	return nil
 }
 
@@ -177,17 +181,25 @@ func (p *Plugin) Revert(event controller.Event) error {
 
 func (p *Plugin) computeSid(pod *podmodel.ID) (*net.IP, error) {
 	// applying other netmask-part for pod IP address and using it as LocalSID's SID (segment ID)
-	localSIDBaseIP := net.ParseIP("5555::").To16()
-	podIPNet := p.IPAM.GetPodIP(*pod)
-	podIPMask := podIPNet.Mask
-	if _, bitLength := podIPMask.Size(); bitLength != 16*8 { //not ipv6
-		return nil, errors.Errorf("can't get sid for pod IP %+v (pod ID %+v)", podIPNet, *pod)
+	//localSIDBaseIP := net.ParseIP("5555::").To16()
+	//podIPNet := p.IPAM.GetPodIP(*pod)
+	//podIPMask := podIPNet.Mask
+	//if _, bitLength := podIPMask.Size(); bitLength != 16*8 { //not ipv6
+	//	return nil, errors.Errorf("can't get sid for pod IP %+v (pod ID %+v)", podIPNet, *pod)
+	//}
+	//podIP := podIPNet.IP.To16()
+	//
+	//sid := net.IP(make([]byte, 16))
+	//for i := range podIP {
+	//	sid[i] = podIP[i] & ^podIPMask[i] | localSIDBaseIP[i]
+	//}
+	key := pod.Namespace + ":" + pod.Name
+	index, exists := p.podToIndex[key]
+	if !exists {
+		p.counter = p.counter + 1
+		p.podToIndex[key] = p.counter
+		index = p.counter
 	}
-	podIP := podIPNet.IP.To16()
-
-	sid := net.IP(make([]byte, 16))
-	for i := range podIP {
-		sid[i] = podIP[i] & ^podIPMask[i] | localSIDBaseIP[i]
-	}
+	sid := net.ParseIP(fmt.Sprintf("5555::%v", index)).To16()
 	return &sid, nil
 }
