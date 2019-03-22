@@ -711,6 +711,7 @@ spec:
               sysctl -w kernel.core_pattern="{{ .Values.vswitch.coreDumpsDir }}/%e-%t"
               ulimit -c unlimited
               echo 2 > /proc/sys/fs/suid_dumpable
+              {{- end }}
               # replace localhost IP by node IP since node port doesn't work
               # on localhost IP in a certain scenario
               cp /etc/etcd/etcd.conf /tmp/etcd.conf
@@ -721,7 +722,6 @@ spec:
                  HOST_IP="[$HOST_IP]"
               fi
               sed -i "s/__HOST_IP__/$HOST_IP/g" /tmp/etcd.conf
-              {{- end }}
           resources: {}
           securityContext:
             privileged: true
