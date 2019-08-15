@@ -241,7 +241,7 @@ func (rndr *Renderer) createEndLinkLocalsid(endLinkAddress net.IP, config contro
 		//TODO Implement support for different type of dx
 		EndFunction: &vpp_srv6.LocalSID_EndFunction_DX6{
 			EndFunction_DX6: &vpp_srv6.LocalSID_EndDX6{
-				NextHop:           ipv6AddrAny,
+				NextHop:           "2002:0:0:2::5",
 				OutgoingInterface: outputIfName,
 			},
 		},
