@@ -226,6 +226,7 @@ func (rndr *Renderer) createInnelLinkLocalsids(sfcName string, pod *renderer.Pod
 		Sid:               rndr.IPAM.SidForSFCServiceFunctionLocalsid(sfcName, servicePodIP).String(),
 		InstallationVrfId: rndr.ContivConf.GetRoutingConfig().PodVRFID,
 		EndFunction: &vpp_srv6.LocalSID_EndFunction_AD{EndFunction_AD: &vpp_srv6.LocalSID_EndAD{ // L2 service
+			L3ServiceAddress:  "2002:0:0:2::5",     //"bd:1::d",
 			OutgoingInterface: pod.InputInterface,  // outgoing interface for SR-proxy is input interface for service
 			IncomingInterface: pod.OutputInterface, // incoming interface for SR-proxy is output interface for service
 		}},
